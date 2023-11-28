@@ -1,0 +1,5 @@
+comando para gerar migração:
+npm run typeorm migration:generate src/migrations/MigrationName -- -d src/data-source
+
+comando para rodar as migrações:
+npm run typeorm migration:run -- -d src/data-source
