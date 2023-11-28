@@ -26,12 +26,15 @@ services:
             - ./data:/data/postgres
         ports:
             - "8080:5432"
-        # app:
-        #   container_name: api
-        #   build: .
-        #   restart: always
-        #   ports:
-        #     - "3001:3001"
-        #   volumes:
-        #     - .:/usr/app
-        #   command: npm run dev
+    app:
+        container_name: api
+        build: .
+        depends_on:
+            - db_teste
+            - db
+        restart: always
+        ports:
+            - "3001:3000"
+        volumes:
+            - .:/usr/app
+        command: sh -c "npm run typeorm migration:run -- -d src/data-source && npm run dev"

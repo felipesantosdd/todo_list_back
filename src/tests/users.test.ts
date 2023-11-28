@@ -149,6 +149,22 @@ describe("Serviços de Todos", () => {
         expect(response.status).toBe(200)
     })
 
+    it("Nao deve ser possivel ver os todos sem estar logado", async () => {
+        const newTodo = {
+            title: "teste1",
+            text: "teste1",
+        }
+
+        await request(app)
+            .post("/todos")
+            .set("Authorization", `Bearer ${loggedIn1.body.token}`)
+            .send(newTodo)
+
+        const response = await request(app).get(`/todos`)
+
+        expect(response.status).toBe(200)
+    })
+
     it("Nao deve ser possivel atualizar todos de outros usuarios", async () => {
         const newTodo = {
             title: "teste1",

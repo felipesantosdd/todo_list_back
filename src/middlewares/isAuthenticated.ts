@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
 import "dotenv/config"
+import { AppError } from "../error"
 
 async function isAuthenticated(
     request: Request | any,
@@ -10,9 +11,7 @@ async function isAuthenticated(
     let token = request.headers.authorization
 
     if (!token) {
-        return response.status(401).json({
-            message: "Não autorizado",
-        })
+        throw new AppError("Não autorizado", 401)
     }
 
     token = token.split(" ")[1]
@@ -21,11 +20,11 @@ async function isAuthenticated(
         if (error) {
             if (error.name === "TokenExpiredError") {
                 return response.status(401).json({
-                    message: "Sessão invalálida.",
+                    error: "Sessão invalálida.",
                 })
             } else {
                 return response.status(401).json({
-                    message: error.message,
+                    error: error.message,
                 })
             }
         }
