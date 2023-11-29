@@ -50,6 +50,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.1.6",
     "supertest": "^6.3.3",
     "typeorm": "^0.3.17"
   }

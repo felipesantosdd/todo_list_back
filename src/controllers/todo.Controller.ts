@@ -19,9 +19,9 @@ class ToDoController {
         }
     }
 
-    static async getAll(req: Request, res: Response): Promise<Response> {
+    static async getAll(req: Request | any, res: Response): Promise<Response> {
         try {
-            const todos: IToDo[] = await ToDoService.getAll()
+            const todos: IToDo[] = await ToDoService.getAll(req.user.id)
             return res.status(200).json(todos)
         } catch (error) {
             if (error instanceof AppError) {

@@ -7,6 +7,7 @@ import {
     IToDo,
     IUpdateToDoRequest,
 } from "../interfaces/todo.Interface"
+import { IUser } from "../interfaces/user.Interfaces"
 
 class ToDoService {
     static todoRepository = AppDataSource.getRepository(ToDo)
@@ -17,17 +18,18 @@ class ToDoService {
             throw new AppError("O título e o texto são obrigatórios", 400)
         }
 
-        const existingTodo = await this.todoRepository.findOne({
-            where: { title: newTodoData.title },
+        const user = await this.userRepository.findOne({
+            where: { id: userId },
+            relations: ["todos"],
         })
+
+        const existingTodo = user.todos.find(
+            (todo) => todo.title === newTodoData.title
+        )
 
         if (existingTodo) {
             throw new AppError("Este nome já foi usado", 409)
         }
-
-        const user = await this.userRepository.findOne({
-            where: { id: userId },
-        })
 
         if (!user) {
             throw new AppError("Usuário inválido", 404)
@@ -42,11 +44,13 @@ class ToDoService {
         return newTodo
     }
 
-    static async getAll(): Promise<IToDo[]> {
-        const todos: IToDo[] = await this.todoRepository.find({
-            relations: ["user"],
+    static async getAll(userId: string): Promise<IToDo[]> {
+        const user: IUser = await this.userRepository.findOne({
+            where: { id: userId },
+            relations: ["todos"],
         })
-        return todos
+
+        return user.todos
     }
 
     static async getById(todoId: string, userId: string): Promise<ToDo> {

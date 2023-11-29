@@ -11,7 +11,7 @@ async function isAuthenticated(
     let token = request.headers.authorization
 
     if (!token) {
-        throw new AppError("Não autorizado", 401)
+        return response.status(401).json({ error: "Não autorizado" })
     }
 
     token = token.split(" ")[1]
@@ -19,9 +19,7 @@ async function isAuthenticated(
     jwt.verify(token, process.env.SECRET_KEY, (error, decoded: any) => {
         if (error) {
             if (error.name === "TokenExpiredError") {
-                return response.status(401).json({
-                    error: "Sessão invalálida.",
-                })
+                throw new AppError("Sessão invalálida.", 401)
             } else {
                 return response.status(401).json({
                     error: error.message,

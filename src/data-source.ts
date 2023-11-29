@@ -20,25 +20,26 @@ const dataSourceConfig = (): DataSourceOptions => {
         throw new Error("Missing required environment variables")
     }
 
-    const isDevelopment = env.parsed.ENVIRONMENT === "development"
+    if (env.parsed.ENVIRONMENT === "test") {
+        return {
+            type: "sqlite",
+            database: ":memory:",
+            synchronize: true,
+            entities: [entitiesPath],
+        }
+    }
 
     return {
         type: "postgres",
-        database: isDevelopment ? env.parsed.DB_NAME : env.parsed.DB_TESTE_NAME,
-        host: isDevelopment ? env.parsed.DB_HOST : env.parsed.DB_TESTE_HOST,
-        port: isDevelopment
-            ? parseInt(env.parsed.DB_PORT || "5432")
-            : parseInt(env.parsed.DB_TESTE_PORT || "5432"),
-        username: isDevelopment
-            ? env.parsed.DB_USERNAME
-            : env.parsed.DB_TESTE_USERNAME,
-        password: isDevelopment
-            ? env.parsed.DB_PASSWORD
-            : env.parsed.DB_TESTE_PASSWORD,
+        database: env.parsed.DB_NAME,
+        host: env.parsed.DB_HOST,
+        port: parseInt(env.parsed.DB_PORT || "5432"),
+        username: env.parsed.DB_USERNAME,
+        password: String(env.parsed.DB_PASSWORD),
         logging: ["error"],
         entities: [entitiesPath],
         migrations: [migrationPath],
-        synchronize: isDevelopment ? false : true,
+        synchronize: false,
     }
 }
 

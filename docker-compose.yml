@@ -14,27 +14,14 @@ services:
         ports:
             - "3333:5432"
 
-    db_teste:
-        container_name: corelab_database_testes
-        image: postgres:14.2-alpine
-        restart: always
-        environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=teste
-            - POSTGRES_NAME=corelab
-        volumes:
-            - ./data:/data/postgres
-        ports:
-            - "8080:5432"
-    app:
-        container_name: api
-        build: .
-        depends_on:
-            - db_teste
-            - db
-        restart: always
-        ports:
-            - "3001:3000"
-        volumes:
-            - .:/usr/app
-        command: sh -c "npm run typeorm migration:run -- -d src/data-source && npm run dev"
+    # app:
+    #     container_name: api
+    #     build: .
+    #     depends_on:
+    #         - db
+    #     restart: always
+    #     ports:
+    #         - "3001:3000"
+    #     volumes:
+    #         - .:/usr/app
+    #     command: sh -c "npm run test && npm run typeorm migration:run -- -d src/data-source && npm run dev"

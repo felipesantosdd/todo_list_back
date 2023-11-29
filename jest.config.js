@@ -1,5 +1,5 @@
 module.exports = {
-  roots: ["<rootDir>/src"],
+  roots: ["<rootDir>/src/__tests__"],
   collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
   coverageDirectory: "coverage",
   testEnvironment: "node",
@@ -9,9 +9,5 @@ module.exports = {
   moduleNameMapper: {
     "@/(.*)": "<rootDir>/src/$1",
   },
-  // globals: {
-  //   'ts-jest': {
-  //     isolatedModules: true,
-  //   },
-  // },
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$"
 }
