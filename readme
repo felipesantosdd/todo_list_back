@@ -1,6 +1,6 @@
 # API de Tarefas e Usuários
 
-Esta API oferece endpoints para gerenciar tarefas (To-Do) e usuários, incluindo autenticação. Abaixo estão os detalhes de cada endpoint fornecido pelos serviços disponíveis:
+A API fornecida apresenta endpoints para a gestão de tarefas (To-Do) e usuários, com funcionalidades de autenticação. Abaixo, detalhamos cada endpoint disponibilizado pelos serviços oferecidos:
 
 ## Tarefas (To-Do)
 
@@ -9,12 +9,9 @@ Esta API oferece endpoints para gerenciar tarefas (To-Do) e usuários, incluindo
 -   **Endpoint:** `POST /todos`
 -   **Descrição:** Cria uma nova tarefa associada a um usuário.
 -   **Parâmetros de Requisição:**
-    -   `newTodoData`: Objeto contendo as informações da nova tarefa.
+    -   `newTodoData`: Objeto contendo informações da nova tarefa.
         -   `title`: Título da tarefa.
         -   `text`: Descrição da tarefa.
-        -   `color`: Cor da tarefa.
-        -   `isFavorited`: Indica se a tarefa está favoritada.
-        -   `isDone`: Indica se a tarefa está concluída.
 -   **Exemplo de Requisição:**
 
     ```http
@@ -24,10 +21,7 @@ Esta API oferece endpoints para gerenciar tarefas (To-Do) e usuários, incluindo
     {
       "newTodoData": {
         "title": "Completar Projeto",
-        "text": "Concluir a implementação do novo projeto",
-        "color": "#FF5733",
-        "isFavorited": false,
-        "isDone": false
+        "text": "Concluir a implementação do novo projeto"
       }
     }
     ```
@@ -39,7 +33,7 @@ Esta API oferece endpoints para gerenciar tarefas (To-Do) e usuários, incluindo
 ### 2. **Listagem de Todas as Tarefas**
 
 -   **Endpoint:** `GET /todos`
--   **Descrição:** Retorna a lista de todas as tarefas existentes, incluindo informações sobre os usuários associados.
+-   **Descrição:** Retorna a lista de todas as tarefas criadas pelo usuário logado.
 -   **Parâmetros de Requisição:**
     -   Nenhum.
 -   **Exemplo de Requisição:**
@@ -53,42 +47,42 @@ Esta API oferece endpoints para gerenciar tarefas (To-Do) e usuários, incluindo
 ### 3. **Detalhes de uma Tarefa Específica**
 
 -   **Endpoint:** `GET /todos/:id`
--   **Descrição:** Retorna detalhes de uma tarefa específica, incluindo informações sobre o usuário associado.
+-   **Descrição:** Retorna detalhes de uma tarefa específica.
 -   **Parâmetros de Requisição:**
     -   `id`: Identificador único da tarefa.
 -   **Exemplo de Requisição:**
     ```http
-    GET /todos/1
+    GET /todos/976f4e05-088a-4cd1-ac72-48777f52537
     Authorization: Bearer <token_de_acesso>
     ```
 -   **Possíveis Respostas:**
     -   `200 OK`: Detalhes da tarefa recuperados com sucesso.
-    -   `401 Unauthorized`: Não autorizado a acessar a tarefa.
+    -   `401 Unauthorized`: Não autorizado.
     -   `404 Not Found`: Tarefa não encontrada.
 
 ### 4. **Atualização de uma Tarefa Específica**
 
 -   **Endpoint:** `PATCH /todos/:id`
--   **Descrição:** Atualiza parcialmente uma tarefa específica, alterando propriedades fornecidas.
+-   **Descrição:** Atualiza parcialmente uma tarefa específica, alterando propriedades fornecidas (com exceção do id).
 -   **Parâmetros de Requisição:**
     -   `id`: Identificador único da tarefa.
     -   `todoUpdate`: Objeto contendo as propriedades a serem atualizadas na tarefa.
 -   **Exemplo de Requisição:**
 
     ```http
-    PATCH /todos/1
+    PATCH /todos/976f4e05-088a-4cd1-ac72-48777f52537
     Authorization: Bearer <token_de_acesso>
 
     {
       "todoUpdate": {
-        "text": "Concluir a implementação e testar"
+        "text": "Concluir a implementação e testes"
       }
     }
     ```
 
 -   **Possíveis Respostas:**
     -   `200 OK`: Tarefa atualizada com sucesso.
-    -   `401 Unauthorized`: Não autorizado a editar a tarefa.
+    -   `401 Unauthorized`: Não autorizado.
     -   `404 Not Found`: Tarefa não encontrada.
 
 ### 5. **Remoção de uma Tarefa Específica**
@@ -99,7 +93,7 @@ Esta API oferece endpoints para gerenciar tarefas (To-Do) e usuários, incluindo
     -   `id`: Identificador único da tarefa.
 -   **Exemplo de Requisição:**
     ```http
-    DELETE /todos/1
+    DELETE /todos/976f4e05-088a-4cd1-ac72-48777f52537
     Authorization: Bearer <token_de_acesso>
     ```
 -   **Possíveis Respostas:**
@@ -153,8 +147,10 @@ Esta API oferece endpoints para gerenciar tarefas (To-Do) e usuários, incluindo
 
 -   **Endpoint:** `GET /users/:id`
 -   **Descrição:** Retorna detalhes de um usuário específico, excluindo informações sensíveis.
--   **Parâmetros de Requisição:**
-    -   `id`: Identificador único do usuário.
+-   \*\*Par
+
+âmetros de Requisição:\*\* - `id`: Identificador único do usuário.
+
 -   **Exemplo de Requisição:**
     ```http
     GET /users/1
@@ -178,23 +174,26 @@ Esta API oferece endpoints para gerenciar tarefas (To-Do) e usuários, incluindo
 
     {
       "data": {
-        "email": "john
+        "email": "john.doe@example.com",
+        "senha": "senha123"
+      }
+    }
     ```
 
-.doe@example.com",
-"senha": "senha123"
-}
-}
-
-```
-- **Possíveis Respostas:**
-- `200 OK`: Login bem-sucedido. Retorna informações do usuário e um token de acesso.
-- `401 Unauthorized`: Usuário e/ou senha inválidos.
+-   **Possíveis Respostas:**
+-   `200 OK`: Login bem-sucedido. Retorna informações do usuário e um token de acesso.
+-   `401 Unauthorized`: Usuário e/ou senha inválidos.
 
 ### Notas Gerais
 
-- Todos os identificadores (`id`) são do tipo UUID.
-- O token de acesso deve ser incluído no cabeçalho de autorização (`Authorization: Bearer <token_de_acesso>`) para autenticação em endpoints protegidos.
+-   Todos os identificadores (`id`) são do tipo UUID.
+-   O token de acesso deve ser incluído no cabeçalho de autorização (`Authorization: Bearer <token_de_acesso>`) para autenticação em endpoints protegidos.
+-   Nenhum usuário pode alterar, deletar ou sequer buscar os dados de outros usuários.
 
-Este README fornece uma visão geral dos serviços oferecidos pela API de Tarefas e Usuários. Consulte a documentação completa para obter detalhes adicionais sobre os parâmetros de requisição, respostas e exemplos de uso.
-```
+-   O arquivo .env conta com dois blocos de variáveis de ambiente, um para a execução da aplicação em Docker e outro para a execução local. A alteração dessas variáveis é feita pela variável ENVIRONMENT, que aceita um dos três valores: development, test ou docker.
+
+-   Esta aplicação conta com testes automatizados. Para executar os testes, navegue ate a pasta Back com `cd Back`, altere a variável de ambiente ENVIRONMENT para test instale as dependencias com `npm i` ou `yarn` e execute o comando `npm run test`. Para acessar testes específicos, você pode executar `npm run test` com o caminho do teste, por exemplo: `npm run test users/create`. Isso executará apenas os testes desejados.
+
+-   Para a execução da aplicação no Docker, entre na pasta Docker e execute o comando `docker-compose up` na raiz do projeto e aguarde o início da aplicação,por padrao a api ira estar na porta 3000.
+
+-   Para executar a aplicação localmente, instale as dependências com `npm i` ou `yarn`. Não esqueça de alterar as variáveis de ambiente para as corretas do seu banco, execute as migrações com `npm run typeorm migration:run -- -d src/data-source` ou `yarn typeorm migration:run -- -d src/data-source`, e após isso, execute `npm run dev` ou `yarn dev` para iniciar a aplicação, por padrao a api ira estar na porta 3000.
