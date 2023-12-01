@@ -24,19 +24,19 @@ describe("/todos", () => {
         const newUser = {
             nome: "user1",
             email: "user1@gmail.com",
-            senha: "123456",
+            senha: "123456"
         }
 
         const newTodo = {
             title: "teste1",
-            text: "teste1",
+            text: "teste1"
         }
 
         await request(app).post("/users").send(newUser)
 
         const user = await request(app).post("/users/login").send({
             email: newUser.email,
-            senha: newUser.senha,
+            senha: newUser.senha
         })
 
         const todo = await request(app)
@@ -56,19 +56,19 @@ describe("/todos", () => {
         const newUser = {
             nome: "user",
             email: "user2@gmail.com",
-            senha: "123456",
+            senha: "123456"
         }
 
         const newTodo = {
             title: "teste2",
-            text: "teste2",
+            text: "teste2"
         }
 
         await request(app).post("/users").send(newUser)
 
         const user = await request(app).post("/users/login").send({
             email: newUser.email,
-            senha: newUser.senha,
+            senha: newUser.senha
         })
 
         const todo = await request(app)
@@ -88,17 +88,17 @@ describe("/todos", () => {
         const newUser = {
             nome: "teste3",
             email: "teste3@gmail.com",
-            senha: "123456",
+            senha: "123456"
         }
         const newUser2 = {
             nome: "teste4",
             email: "teste4@gmail.com",
-            senha: "123456",
+            senha: "123456"
         }
 
         const newTodo = {
             title: "teste3",
-            text: "teste3",
+            text: "teste3"
         }
 
         await request(app).post("/users").send(newUser)
@@ -106,11 +106,11 @@ describe("/todos", () => {
 
         const user = await request(app).post("/users/login").send({
             email: newUser.email,
-            senha: newUser.senha,
+            senha: newUser.senha
         })
         const user2 = await request(app).post("/users/login").send({
             email: newUser2.email,
-            senha: newUser2.senha,
+            senha: newUser2.senha
         })
 
         const todo = await request(app)

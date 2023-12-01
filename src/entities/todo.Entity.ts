@@ -19,9 +19,6 @@ export class ToDo {
     @Column({ type: "boolean", default: false })
     isFavorited: boolean
 
-    @Column({ type: "boolean", default: false })
-    isDone: boolean
-
     @ManyToOne(() => User, (user) => user.todos)
     user: User
 }

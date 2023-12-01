@@ -25,7 +25,7 @@ describe("/user", () => {
         const newUser = {
             nome: "usuario",
             email: "usuario@gmail.com",
-            senha: "senha123",
+            senha: "senha123"
         }
 
         const user = await request(app).post("/users").send(newUser)
@@ -33,7 +33,7 @@ describe("/user", () => {
 
         const response = await request(app).post("/users/login").send({
             email: "usuario@gmail.com",
-            senha: "senha123",
+            senha: "senha123"
         })
 
         expect(response.body).toHaveProperty("email")
@@ -46,7 +46,7 @@ describe("/user", () => {
         const newUser = {
             nome: "usuario",
             email: "usuario@gmail.com",
-            senha: "senha123",
+            senha: "senha123"
         }
 
         const user = await request(app).post("/users").send(newUser)
@@ -54,7 +54,7 @@ describe("/user", () => {
 
         const response = await request(app).post("/users/login").send({
             email: "usuario@gmail.com",
-            senha: "outrassenha",
+            senha: "outrassenha"
         })
 
         expect(response.body).toHaveProperty("error")

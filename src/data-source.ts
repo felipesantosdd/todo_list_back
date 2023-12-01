@@ -23,7 +23,7 @@ const dataSourceConfig = (): DataSourceOptions => {
             type: "sqlite",
             database: ":memory:",
             synchronize: true,
-            entities: [entitiesPath],
+            entities: [entitiesPath]
         }
     }
 
@@ -52,7 +52,7 @@ const dataSourceConfig = (): DataSourceOptions => {
         logging: ["error"],
         entities: [entitiesPath],
         migrations: [migrationPath],
-        synchronize: false,
+        synchronize: false
     }
 }
 

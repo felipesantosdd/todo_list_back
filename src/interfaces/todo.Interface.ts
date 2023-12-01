@@ -6,12 +6,11 @@ export interface IToDo {
     text: string
     color: string
     isFavorited: boolean
-    isDone: boolean
     user?: IUser
 }
 
-export type INewToDoRequest = Pick<IToDo, "title" | "text">
+export type INewToDoRequest = Pick<IToDo, "title" | "text" | "isFavorited">
 export type IUpdateToDoRequest = Pick<
     IToDo,
-    "title" | "text" | "color" | "isFavorited" | "isDone"
+    "title" | "text" | "color" | "isFavorited"
 >

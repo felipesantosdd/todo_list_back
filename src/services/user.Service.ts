@@ -6,7 +6,7 @@ import {
     ILoginResponse,
     INewUserRequest,
     INewUserResponse,
-    IUser,
+    IUser
 } from "../interfaces/user.Interfaces"
 import { compare, genSaltSync, hashSync } from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -16,7 +16,7 @@ class UserService {
 
     static async create(newUserData: INewUserRequest): Promise<IUser> {
         const emailUsed = await this.userRepository.findOne({
-            where: { email: newUserData.email },
+            where: { email: newUserData.email }
         })
 
         if (emailUsed) {
@@ -45,7 +45,7 @@ class UserService {
     static async getById(id: string): Promise<INewUserResponse> {
         const user = await this.userRepository.findOne({
             where: { id: id },
-            relations: ["todos"],
+            relations: ["todos"]
         })
 
         if (!user) {
@@ -61,9 +61,9 @@ class UserService {
     static async login(data: ILoginRequest): Promise<ILoginResponse> {
         const user = await this.userRepository.findOne({
             where: {
-                email: data.email,
+                email: data.email
             },
-            relations: ["todos"],
+            relations: ["todos"]
         })
 
         if (!user) {
@@ -78,7 +78,7 @@ class UserService {
 
         const token = jwt.sign({ email: user.email }, process.env.SECRET_KEY, {
             subject: user.id,
-            expiresIn: "30m",
+            expiresIn: "24h"
         })
 
         const response: ILoginResponse = {
@@ -86,7 +86,7 @@ class UserService {
             email: user.email,
             nome: user.nome,
             todos: user.todos,
-            token: token,
+            token: token
         }
 
         return response

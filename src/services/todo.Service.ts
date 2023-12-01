@@ -5,7 +5,7 @@ import { AppError } from "../error"
 import {
     INewToDoRequest,
     IToDo,
-    IUpdateToDoRequest,
+    IUpdateToDoRequest
 } from "../interfaces/todo.Interface"
 import { IUser } from "../interfaces/user.Interfaces"
 
@@ -18,12 +18,12 @@ class ToDoService {
             throw new AppError("O título e o texto são obrigatórios", 400)
         }
 
-        const user = await this.userRepository.findOne({
+        const userData = await this.userRepository.findOne({
             where: { id: userId },
-            relations: ["todos"],
+            relations: ["todos"]
         })
 
-        const existingTodo = user.todos.find(
+        const existingTodo = userData.todos.find(
             (todo) => todo.title === newTodoData.title
         )
 
@@ -31,17 +31,19 @@ class ToDoService {
             throw new AppError("Este nome já foi usado", 409)
         }
 
-        if (!user) {
+        if (!userData) {
             throw new AppError("Usuário inválido", 404)
         }
 
         const newTodo = await this.todoRepository.save(newTodoData)
-        newTodo.user = user
+        newTodo.user = userData
 
-        await this.userRepository.save(user)
+        await this.userRepository.save(userData)
         await this.todoRepository.save(newTodo)
 
-        return newTodo
+        const { user, ...response } = newTodo
+
+        return response
     }
 
     static async getAll(userId: string): Promise<IToDo[]> {
@@ -49,14 +51,14 @@ class ToDoService {
             where: { id: userId },
             relations: ["todos"],
         })
-
-        return user.todos
+        const sortedTodos = user.todos.sort((a, b) => a.title.localeCompare(b.title));
+        return sortedTodos;
     }
 
     static async getById(todoId: string, userId: string): Promise<ToDo> {
         const todo = await this.todoRepository.findOne({
             where: { id: todoId },
-            relations: ["user"],
+            relations: ["user"]
         })
 
         if (!todo) {
@@ -77,17 +79,14 @@ class ToDoService {
     ): Promise<IToDo> {
         const todo: IToDo = await this.todoRepository.findOne({
             where: {
-                id: todoId,
+                id: todoId
             },
-            relations: ["user"],
+            relations: ["user"]
         })
 
         if (!todo) {
             throw new AppError("Tarefa nao encontrada", 404)
         }
-
-        console.log(todo?.user?.id)
-        console.log(userId)
 
         if (todo?.user?.id !== userId) {
             throw new AppError("Não autorizado", 401)
@@ -109,9 +108,9 @@ class ToDoService {
     static async delete(todoId: string, userId: string): Promise<void> {
         const todo: IToDo = await this.todoRepository.findOne({
             where: {
-                id: todoId,
+                id: todoId
             },
-            relations: ["user"],
+            relations: ["user"]
         })
 
         if (!todo) {

@@ -11,7 +11,7 @@ class UserController {
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({
-                    error: error.message,
+                    error: error.message
                 })
             } else {
                 return res.status(400).json({ erro: error.message })
@@ -26,7 +26,7 @@ class UserController {
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({
-                    error: error.message,
+                    error: error.message
                 })
             } else {
                 return res.status(400).json({ erro: error.message })
@@ -43,7 +43,7 @@ class UserController {
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({
-                    error: error.message,
+                    error: error.message
                 })
             } else {
                 return res.status(400).json({ erro: error.message })
@@ -58,7 +58,7 @@ class UserController {
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({
-                    error: error.message,
+                    error: error.message
                 })
             } else {
                 return res.status(400).json({ erro: error.message })

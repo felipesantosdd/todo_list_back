@@ -25,7 +25,7 @@ describe("/user", () => {
         const newUser = {
             nome: "felipe",
             email: "feliesantosdd@gmail.com",
-            senha: "123456",
+            senha: "123456"
         }
         const response = await request(app).post("/users").send(newUser)
 
@@ -40,7 +40,7 @@ describe("/user", () => {
         const existingUser = {
             nome: "Usuário Existente",
             email: "teste2@example.com",
-            senha: "senha456",
+            senha: "senha456"
         }
 
         await request(app).post("/users").send(existingUser)

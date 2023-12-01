@@ -19,17 +19,17 @@ async function isAuthenticated(
     jwt.verify(token, process.env.SECRET_KEY, (error, decoded: any) => {
         if (error) {
             if (error.name === "TokenExpiredError") {
-                throw new AppError("Sessão invalálida.", 401)
+                return response.status(401).json({ error: "Sessão inválida" })
             } else {
                 return response.status(401).json({
-                    error: error.message,
+                    error: error.message
                 })
             }
         }
 
         request.user = {
             id: decoded.sub as string,
-            email: decoded.email,
+            email: decoded.email
         }
 
         return next()
