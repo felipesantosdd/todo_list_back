@@ -49,10 +49,12 @@ class ToDoService {
     static async getAll(userId: string): Promise<IToDo[]> {
         const user: IUser = await this.userRepository.findOne({
             where: { id: userId },
-            relations: ["todos"],
+            relations: ["todos"]
         })
-        const sortedTodos = user.todos.sort((a, b) => a.title.localeCompare(b.title));
-        return sortedTodos;
+        const sortedTodos = user.todos.sort((a, b) =>
+            a.title.localeCompare(b.title)
+        )
+        return sortedTodos
     }
 
     static async getById(todoId: string, userId: string): Promise<ToDo> {
