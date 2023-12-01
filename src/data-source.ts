@@ -9,15 +9,6 @@ const dataSourceConfig = (): DataSourceOptions => {
 
     const env = dotenv.config()
 
-    if (
-        !env.parsed.DB_NAME ||
-        !env.parsed.DB_HOST ||
-        !env.parsed.DB_USERNAME ||
-        !env.parsed.DB_PASSWORD
-    ) {
-        throw new Error("Missing required environment variables")
-    }
-
     if (env.parsed.ENVIRONMENT === "test") {
         return {
             type: "sqlite",
