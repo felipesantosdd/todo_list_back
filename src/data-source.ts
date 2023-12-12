@@ -7,9 +7,9 @@ const dataSourceConfig = (): DataSourceOptions => {
     const migrationPath = path.join(__dirname, "./migrations/**.{ts,js}")
     const entitiesPath = path.join(__dirname, "./entities/**.{ts,js}")
 
-    const env = dotenv.config()
+    const env = process.env
 
-    if (env && env.parsed && env.parsed.ENVIRONMENT === "test") {
+    if (env && env.parsed && env.ENVIRONMENT === "test") {
         return {
             type: "sqlite",
             database: ":memory:",
@@ -20,11 +20,11 @@ const dataSourceConfig = (): DataSourceOptions => {
 
     return {
         type: "postgres",
-        database: env.parsed.DOCKER_DB_NAME,
-        host: env.parsed.DOCKER_DB_HOST,
-        port: parseInt(env.parsed.DOCKER_DB_PORT),
-        username: env.parsed.DOCKER_DB_USERNAME,
-        password: String(env.parsed.DOCKER_DB_PASSWORD),
+        database: env.DOCKER_DB_NAME,
+        host: env.DOCKER_DB_HOST,
+        port: parseInt(env.DOCKER_DB_PORT),
+        username: env.DOCKER_DB_USERNAME,
+        password: String(env.DOCKER_DB_PASSWORD),
         logging: ["error"],
         entities: [entitiesPath],
         migrations: [migrationPath],
