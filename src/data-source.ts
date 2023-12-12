@@ -20,26 +20,11 @@ const dataSourceConfig = (): DataSourceOptions => {
 
     return {
         type: "postgres",
-        database:
-            env.parsed.ENVIRONMENT === "development"
-                ? env.parsed.DB_NAME
-                : env.parsed.DOCKER_DB_NAME,
-        host:
-            env.parsed.ENVIRONMENT === "development"
-                ? env.parsed.DB_HOST
-                : env.parsed.DOCKER_DB_HOST,
-        port:
-            env.parsed.ENVIRONMENT === "development"
-                ? parseInt(env.parsed.DB_PORT)
-                : parseInt(env.parsed.DOCKER_DB_PORT),
-        username:
-            env.parsed.ENVIRONMENT === "development"
-                ? env.parsed.DB_USERNAME
-                : env.parsed.DOCKER_DB_USERNAME,
-        password:
-            env.parsed.ENVIRONMENT === "development"
-                ? String(env.parsed.DB_PASSWORD)
-                : String(env.parsed.DOCKER_DB_PASSWORD),
+        database: env.parsed.DOCKER_DB_NAME,
+        host: env.parsed.DOCKER_DB_HOST,
+        port: parseInt(env.parsed.DOCKER_DB_PORT),
+        username: env.parsed.DOCKER_DB_USERNAME,
+        password: String(env.parsed.DOCKER_DB_PASSWORD),
         logging: ["error"],
         entities: [entitiesPath],
         migrations: [migrationPath],
