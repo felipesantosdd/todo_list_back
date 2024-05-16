@@ -23,11 +23,11 @@ const dataSourceConfig = (): DataSourceOptions => {
 
     return {
         type: "postgres",
-        database: env.DOCKER_DB_NAME,
-        host: env.DOCKER_DB_HOST,
-        port: parseInt(env.DOCKER_DB_PORT),
-        username: env.DOCKER_DB_USERNAME,
-        password: String(env.DOCKER_DB_PASSWORD),
+        database: env.DB_NAME,
+        host: env.DB_HOST,
+        port: parseInt(env.DB_PORT),
+        username: env.DB_USERNAME,
+        password: String(env.DB_PASSWORD),
         logging: ["error"],
         entities: [entitiesPath],
         migrations: [migrationPath],
