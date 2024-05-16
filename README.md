@@ -1,5 +1,32 @@
 # API de Tarefas e Usuários
 
+**Passo a Passo para Executar a Aplicação:**
+
+1. **Acesso à Raiz do Projeto:**
+   - Navegue até o diretório principal do projeto.
+
+2. **Instalação das Dependências:**
+   - Utilize o comando `yarn install` ou `npm install` para instalar as dependências necessárias.
+
+3. **Configuração do Banco de Dados:**
+   - Adicione as informações do seu banco de dados no arquivo `.env`.
+
+4. **Execução das Migrações:**
+   - Execute as migrações com o seguinte comando:
+     ```
+     npm run typeorm migration:run -- -d src/data-source
+     ```
+
+5. **Iniciar o Projeto:**
+   - Para iniciar o projeto, utilize o comando:
+     ```
+     npm run dev
+     ```
+   - Ou, se estiver utilizando o Yarn:
+     ```
+     yarn dev
+     ```
+
 A API fornecida apresenta endpoints para a gestão de tarefas (To-Do) e usuários, com funcionalidades de autenticação. Abaixo, detalhamos cada endpoint disponibilizado pelos serviços oferecidos:
 
 ## Tarefas (To-Do)
