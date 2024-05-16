@@ -9,7 +9,10 @@ const dataSourceConfig = (): DataSourceOptions => {
 
     const env = process.env
 
-    if (env && env.parsed && env.ENVIRONMENT === "test") {
+    dotenv.config();
+
+
+    if (env.ENVIRONMENT === "test") {
         return {
             type: "sqlite",
             database: ":memory:",
